@@ -1,17 +1,19 @@
 import os
 
 prompt_dict = {}
-prompt_dict_file = os.path.join(os.path.dirname(__file__), 'log.csv')
+prompt_dict_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'log.csv')
 first_use = True
 
 def user_input(prompt):
+	global prompt_dict, prompt_dict_file, first_use
 	if first_use:
 		first_use = False
 		#read the file
 		with open(prompt_dict_file, 'r') as file:
 			lines = file.read().split('\n')
-			for line in lines:
-				prompt_dict[line.split(',')[0]] = line.split(',')[1]
+			if lines[0] != '':
+				for line in lines:
+					prompt_dict[line.split(',')[0]] = line.split(',')[1]
 
 	answer = ''
 	if prompt in prompt_dict.keys():
